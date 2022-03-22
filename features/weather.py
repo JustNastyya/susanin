@@ -15,7 +15,7 @@ class WeatherAPI():
         res = False# requests.get(request, headers={'X-Yandex-API-Key': self.api_key})
         if not(res):
             # print(res.status_code, res.reason)
-            return 'ясно', '12 C'
+            return 'дождь', '12 C'
         else:
             result = res.json()
             temperature = result['fact']['temp']

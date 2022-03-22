@@ -1,15 +1,10 @@
 import sys
 
 from PyQt5 import uic
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtCore import QTimer, QTime, Qt
-from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QLabel
+from PyQt5.QtCore import QTimer, QTime, Qt, QUrl
 from PyQt5.QtWebEngineWidgets import *
-
-from PyQt5.QtGui import QPixmap
-
-import PyQt5
 
 from features.weather import *
 
@@ -40,10 +35,15 @@ class MyWidget(QMainWindow):
 
         # weather display
         weather, temp = weather_api.get_weather_and_temp()
-        self.weather_display.setText(weather)
+        self.weather_display.setText(weather.capitalize())
         self.temperature_display.setText(temp)
-        pixmap = QPixmap(f'\\img\\{weather}.png')
-        self.weather_pic.setPixmap(pixmap)
+
+        label = QLabel(self)
+        pixmap = QPixmap(f'img\\{weather}.png')
+        label.setPixmap(pixmap)
+        rect = self.weather_pic.frameGeometry()
+        label.move(rect.x(), rect.y())
+        label.resize(rect.width(), rect.height())
 
         # set picture
         weather_timer = QTimer(self)
