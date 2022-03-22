@@ -1,12 +1,17 @@
 import sys
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
-from PyQt5.QtWidgets import QInputDialog, QColorDialog
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import QTimer, QTime, Qt
+from PyQt5.QtCore import QUrl
+from PyQt5.QtWebEngineWidgets import *
+
+from PyQt5.QtGui import QPixmap
+
+import PyQt5
 
 from features.weather import *
-
 
 # useful classes and variables
 
@@ -24,6 +29,9 @@ class MyWidget(QMainWindow):
         uic.loadUi('main.ui', self)
         self.sos_button.clicked.connect(self.sos)
 
+        self.title = "СУСАНИН"
+        self.setWindowTitle(self.title)
+
         # clock display
         self.show_time()
         timer = QTimer(self)
@@ -34,10 +42,23 @@ class MyWidget(QMainWindow):
         weather, temp = weather_api.get_weather_and_temp()
         self.weather_display.setText(weather)
         self.temperature_display.setText(temp)
+        pixmap = QPixmap(f'\\img\\{weather}.png')
+        self.weather_pic.setPixmap(pixmap)
+
         # set picture
         weather_timer = QTimer(self)
         weather_timer.timeout.connect(self.update_weather)
         timer.start(1000 * 60 * 60)
+
+        # map
+        width, heights = self.map.width(), self.map.height()
+        print(width, heights)
+        with open("map.html", "r", encoding='utf-8') as f:
+            page = f.read()
+            page = page.replace('{{w}}', str(width - 20))
+            page = page.replace('{{h}}', str(heights - 20))
+            self.map.setHtml(page)
+        self.map.show()
 
     def sos(self):
         pass
@@ -52,6 +73,8 @@ class MyWidget(QMainWindow):
         weather, temp = weather_api.get_weather_and_temp()
         self.weather_display.setText(weather)
         self.temperature_display.setText(temp)
+        pixmap = QPixmap(f'\\img\\{weather}.png')
+        self.weather_pic.setPixmap(pixmap)
         # set picture
 
 
