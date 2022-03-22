@@ -38,6 +38,7 @@ class MyWidget(QMainWindow):
         self.weather_display.setText(weather.capitalize())
         self.temperature_display.setText(temp)
 
+        # set picture
         label = QLabel(self)
         pixmap = QPixmap(f'img\\{weather}.png')
         label.setPixmap(pixmap)
@@ -45,10 +46,10 @@ class MyWidget(QMainWindow):
         label.move(rect.x(), rect.y())
         label.resize(rect.width(), rect.height())
 
-        # set picture
+        # waether timer
         weather_timer = QTimer(self)
         weather_timer.timeout.connect(self.update_weather)
-        timer.start(1000 * 60 * 60)
+        weather_timer.start(1000 * 60 * 60)
 
         # map
         width, heights = self.map.width(), self.map.height()
@@ -67,15 +68,22 @@ class MyWidget(QMainWindow):
     def show_time(self):
         current_time = QTime.currentTime()
         label_time = current_time.toString('hh:mm')
+        print(label_time)
         self.clock.display(label_time)
-    
+
     def update_weather(self):
         weather, temp = weather_api.get_weather_and_temp()
         self.weather_display.setText(weather)
         self.temperature_display.setText(temp)
         pixmap = QPixmap(f'\\img\\{weather}.png')
         self.weather_pic.setPixmap(pixmap)
-        # set picture
+
+        label = QLabel(self)
+        pixmap = QPixmap(f'img\\{weather}.png')
+        label.setPixmap(pixmap)
+        rect = self.weather_pic.frameGeometry()
+        label.move(rect.x(), rect.y())
+        label.resize(rect.width(), rect.height())
 
 
 if __name__ == '__main__':
