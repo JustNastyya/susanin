@@ -12,6 +12,12 @@ from features.weather import *
 
 weather_api = WeatherAPI()
 
+from os import listdir
+print([f for f in listdir()])
+
+a = open('some.txt', 'r').readlines()
+print(a)
+
 
 class MyWidget(QMainWindow):
     def __init__(self):
@@ -53,7 +59,6 @@ class MyWidget(QMainWindow):
 
         # map
         width, heights = self.map.width(), self.map.height()
-        print(width, heights)
         with open("map.html", "r", encoding='utf-8') as f:
             page = f.read()
             page = page.replace('{{w}}', str(width - 20))
@@ -68,7 +73,6 @@ class MyWidget(QMainWindow):
     def show_time(self):
         current_time = QTime.currentTime()
         label_time = current_time.toString('hh:mm')
-        print(label_time)
         self.clock.display(label_time)
 
     def update_weather(self):
