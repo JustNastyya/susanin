@@ -6,11 +6,15 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QLabel
 from PyQt5.QtCore import QTimer, QTime, Qt, QUrl
 from PyQt5.QtWebEngineWidgets import *
 
+import os
+
 from features.weather import *
+from features.voice_helper import *
 
 # useful classes and variables
 
 weather_api = WeatherAPI()
+voice_recog = Interaction()
 
 from os import listdir
 print([f for f in listdir()])
@@ -66,8 +70,28 @@ class MyWidget(QMainWindow):
             self.map.setHtml(page)
         self.map.show()
 
+        # voice
+        self.voice.clicked.connect(self.help)
+    
+    def help(self):
+        words = 'Чем могу помочь'
+        say(words)
+        self.voice_recognize()
+    
+    def voice_recognize(self):
+        said = voice_recog.question()
+        if not(said):
+            say('Не могу понять')
+        elif 'сегодня' in said or 'погода' in said:
+            say(f'Сегодня в Воронеже {weather_api.temp} градусов, {weather_api.weather}')
+        elif 'время' in said or 'час' in said:
+            current_time = QTime.currentTime()
+            h, m = [i for i in current_time.toString('hh:mm').split(':')]
+            say(f'Сечас {h} часов {m} минут')
+
     def sos(self):
-        pass
+        words = 'Не паникуйте. За помощью наберите 0 1 или 1 1 2'
+        say(words)
 
     # method called by timer
     def show_time(self):

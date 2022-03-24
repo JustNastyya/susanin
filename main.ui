@@ -17,9 +17,9 @@
    <widget class="QPushButton" name="sos_button">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>280</x>
       <y>640</y>
-      <width>501</width>
+      <width>231</width>
       <height>101</height>
      </rect>
     </property>
@@ -132,6 +132,30 @@ color: rgb(255, 255, 255);</string>
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="voice">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>640</y>
+      <width>241</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Помощь&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgb(255, 30, 30) ;
+font: 87 18pt &quot;Segoe UI Black&quot;;
+font-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Сусанин</string>
+    </property>
+   </widget>
    <zorder>map</zorder>
    <zorder>sos_button</zorder>
    <zorder>horizontalLayoutWidget</zorder>
@@ -140,6 +164,7 @@ color: rgb(255, 255, 255);</string>
    <zorder>weather_display</zorder>
    <zorder>temperature_display</zorder>
    <zorder>weather_pic</zorder>
+   <zorder>voice</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

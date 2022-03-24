@@ -9,6 +9,9 @@ class WeatherAPI():
         self.lat = '51.40480'
         self.lon = '39.13480'
         self.api_key = weather_key
+        self.info = None
+        self.weather = 'ясно'
+        self.temp = '2 C'
 
     def get_weather_and_temp(self):
         request = f'https://api.weather.yandex.ru/v2/forecast?lat={self.lat}&lon={self.lon}'
@@ -18,7 +21,10 @@ class WeatherAPI():
             return 'ясно', '2 C'
         else:
             result = res.json()
+            self.info = result
             temperature = result['fact']['temp']
             weather = result['fact']['condition']
             weather = weather_translate[weather]
+            self.temp = temperature
+            self.weather = weather
             return weather, str(temperature) + ' C'
